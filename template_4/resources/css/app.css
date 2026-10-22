@@ -1,0 +1,197 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../../app/**/*.php';
+
+/*
+ * Template 4 — "Luxury Minimal"
+ * Black, white and gold. Generous whitespace, serif headings, hairline borders,
+ * square corners and no shadows. Gold is an accent, never a fill for large areas.
+ * The --color-primary-* (gold) scale can be overridden at runtime from Settings → Branding.
+ * See DESIGN.md for the full design system.
+ */
+@theme {
+    --font-sans: var(--font-arabic, 'Alexandria'), var(--font-latin, 'Jost'), ui-sans-serif, system-ui, sans-serif;
+    --font-serif: var(--font-arabic-serif, 'Amiri'), var(--font-latin-serif, 'Cormorant Garamond'), Georgia, serif;
+
+    --color-primary-50: #faf7f1;
+    --color-primary-100: #f3ecdf;
+    --color-primary-200: #e6d6b8;
+    --color-primary-300: #d4bb8c;
+    --color-primary-400: #c3a26c;
+    --color-primary-500: #b08d57;
+    --color-primary-600: #9a7746;
+    --color-primary-700: #7d5f39;
+    --color-primary-800: #654d31;
+    --color-primary-900: #54412b;
+    --color-primary-950: #2f2416;
+
+    --color-secondary-500: #171717;
+
+    --color-canvas: #fbfaf8;
+    --color-ink: #0a0a0a;
+    --color-muted: #7a7a7a;
+    --color-line: #e7e3dc;
+
+    --radius-card: 0;
+    --shadow-soft: none;
+    --shadow-lift: 0 30px 60px -30px rgb(0 0 0 / 0.25);
+}
+
+html[lang='en'] {
+    --font-sans: var(--font-latin, 'Jost'), var(--font-arabic, 'Alexandria'), ui-sans-serif, system-ui, sans-serif;
+    --font-serif: var(--font-latin-serif, 'Cormorant Garamond'), var(--font-arabic-serif, 'Amiri'), Georgia, serif;
+}
+
+/* Arabic script must never be letter-spaced: tracking breaks letter joining. Unlayered, so it beats utilities. */
+[dir='rtl'] [class*='tracking-'],
+[dir='rtl'] .eyebrow,
+[dir='rtl'] .table-clean thead th {
+    letter-spacing: 0;
+}
+
+@layer base {
+    html {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        @apply bg-canvas text-[14px] font-light text-ink antialiased;
+    }
+
+    h1,
+    h2,
+    h3 {
+        @apply font-serif font-normal;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+
+    /* Numbers, phones and file numbers always read left-to-right, even inside Arabic text. */
+    .ltr-nums {
+        direction: ltr;
+        unicode-bidi: isolate;
+    }
+
+    ::selection {
+        @apply bg-primary-200 text-ink;
+    }
+}
+
+@layer components {
+    .card {
+        @apply border border-line bg-white;
+    }
+
+    /* Small caps label above titles and fields. */
+    .eyebrow {
+        @apply text-[10.5px] font-medium tracking-[0.25em] text-primary-600 uppercase;
+    }
+
+    .gold-rule {
+        @apply h-px w-12 bg-primary-500;
+    }
+
+    .form-label {
+        @apply mb-2 block text-[11px] font-medium tracking-[0.15em] text-muted uppercase;
+    }
+
+    [dir='rtl'] .form-label {
+        @apply text-xs tracking-normal;
+    }
+
+    .form-control {
+        @apply block w-full rounded-none border-0 border-b border-neutral-300 bg-transparent px-0 py-2.5 text-[15px] text-ink placeholder:text-neutral-400 focus:border-ink focus:ring-0 disabled:cursor-not-allowed disabled:text-neutral-400;
+    }
+
+    textarea.form-control {
+        @apply border px-3;
+    }
+
+    select.form-control {
+        @apply pe-8;
+    }
+
+    /* @tailwindcss/forms draws the select chevron on the right; mirror it for Arabic. */
+    [dir='rtl'] select.form-control {
+        background-position: left 0 center;
+        padding-right: 0;
+    }
+
+    .form-control.is-invalid {
+        @apply border-rose-500;
+    }
+
+    .form-check {
+        @apply size-4 rounded-none border-neutral-400 text-ink focus:ring-primary-300;
+    }
+
+    .form-error {
+        @apply mt-1.5 text-xs text-rose-700;
+    }
+
+    .form-hint {
+        @apply mt-1.5 text-xs text-muted;
+    }
+
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-none px-6 py-3 text-[11px] font-medium tracking-[0.2em] whitespace-nowrap uppercase transition duration-300 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-primary-500 disabled:pointer-events-none disabled:opacity-50;
+    }
+
+    [dir='rtl'] .btn {
+        @apply text-[13px] tracking-normal;
+    }
+
+    .btn-sm {
+        @apply px-4 py-2;
+    }
+
+    .btn-primary {
+        @apply bg-ink text-white hover:bg-primary-700;
+    }
+
+    .btn-secondary {
+        @apply border border-ink bg-transparent text-ink hover:bg-ink hover:text-white;
+    }
+
+    .btn-ghost {
+        @apply text-neutral-600 hover:text-primary-700;
+    }
+
+    .btn-danger {
+        @apply bg-rose-800 text-white hover:bg-rose-900;
+    }
+
+    .table-clean {
+        @apply min-w-full text-[14px];
+    }
+
+    .table-clean thead th {
+        @apply border-b border-ink px-4 py-3 text-start text-[10.5px] font-medium tracking-[0.2em] text-muted uppercase;
+    }
+
+    .table-clean tbody td {
+        @apply border-b border-line px-4 py-4 align-middle text-neutral-700;
+    }
+
+    .table-clean tbody tr {
+        @apply transition hover:bg-primary-50/60;
+    }
+
+    .nav-link {
+        @apply relative flex items-center gap-4 py-2 text-[14px] text-neutral-500 transition hover:text-ink;
+    }
+
+    .nav-link.active {
+        @apply text-ink;
+    }
+
+    .nav-link.active::before {
+        content: '';
+        @apply absolute -start-6 top-1/2 h-px w-4 bg-primary-500;
+    }
+}

@@ -1,0 +1,94 @@
+@import 'tailwindcss' source(none);
+
+@source '../views/print/**/*.blade.php';
+@source '../views/components/print-layout.blade.php';
+
+/*
+ * Print stylesheet for template 4 ("Luxury Minimal"): centred serif letterhead,
+ * gold hairlines, small-caps labels and generous margins. Black ink + one gold accent.
+ * The primary (gold) palette is overridden by the clinic color (Settings → Branding).
+ */
+@theme {
+    --font-sans: var(--font-arabic, 'Alexandria'), var(--font-latin, 'Jost'), sans-serif;
+    --font-serif: var(--font-arabic-serif, 'Amiri'), var(--font-latin-serif, 'Cormorant Garamond'), Georgia, serif;
+
+    --color-primary-50: #faf7f1;
+    --color-primary-100: #f3ecdf;
+    --color-primary-200: #e6d6b8;
+    --color-primary-500: #b08d57;
+    --color-primary-600: #9a7746;
+    --color-primary-700: #7d5f39;
+    --color-primary-900: #54412b;
+    --color-secondary-500: #171717;
+
+    --color-ink: #0a0a0a;
+    --color-muted: #7a7a7a;
+    --color-line: #e7e3dc;
+}
+
+html[lang='en'] {
+    --font-sans: var(--font-latin, 'Jost'), var(--font-arabic, 'Alexandria'), sans-serif;
+    --font-serif: var(--font-latin-serif, 'Cormorant Garamond'), var(--font-arabic-serif, 'Amiri'), Georgia, serif;
+}
+
+@page {
+    size: A4;
+    margin: 16mm;
+}
+
+@page a5 {
+    size: A5;
+    margin: 10mm;
+}
+
+body {
+    @apply bg-[#f4f2ee] font-sans font-light text-ink antialiased;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.sheet {
+    @apply mx-auto my-8 bg-white;
+    width: 210mm;
+    min-height: 297mm;
+    padding: 16mm;
+}
+
+.sheet.a5 {
+    width: 148mm;
+    min-height: 210mm;
+    padding: 10mm;
+    page: a5;
+}
+
+.cap {
+    @apply text-[8px] font-medium tracking-[0.25em] text-muted uppercase;
+}
+
+/* Arabic must never be letter-spaced. */
+[dir='rtl'] .cap,
+[dir='rtl'] [class*='tracking-'] {
+    letter-spacing: 0;
+}
+
+[dir='rtl'] .cap {
+    @apply text-[9px];
+}
+
+@media print {
+    body {
+        @apply bg-white;
+    }
+
+    .sheet,
+    .sheet.a5 {
+        @apply m-0;
+        width: auto;
+        min-height: auto;
+        padding: 0;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+}

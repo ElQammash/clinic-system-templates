@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class LogoutController extends Controller
+{
+    public function __invoke(Request $request): RedirectResponse
+    {
+        $locale = app()->getLocale();
+
+        Auth::guard('web')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        // Keep the language the user was using on the login screen.
+        $request->session()->put('locale', $locale);
+
+        return redirect()->route('login');
+    }
+}
