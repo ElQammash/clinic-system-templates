@@ -1,0 +1,88 @@
+@import 'tailwindcss' source(none);
+
+@source '../views/print/**/*.blade.php';
+@source '../views/components/print-layout.blade.php';
+
+/*
+ * Print stylesheet for template 2 ("Dark Pro"): monochrome modern grid.
+ * Black header band, hairline 1px rules, mono figures, one accent (the clinic color)
+ * used only for small markers. Prints well on cheap laser printers.
+ */
+@theme {
+    --font-sans: var(--font-arabic, 'Readex Pro'), var(--font-latin, 'Manrope'), sans-serif;
+    --font-mono: var(--font-code, 'JetBrains Mono'), var(--font-arabic, 'Readex Pro'), ui-monospace, monospace;
+
+    --color-primary-50: #ecfdf5;
+    --color-primary-100: #d1fae5;
+    --color-primary-200: #a7f3d0;
+    --color-primary-500: #10b981;
+    --color-primary-600: #059669;
+    --color-primary-700: #047857;
+    --color-primary-900: #064e3b;
+    --color-secondary-500: #06b6d4;
+}
+
+html[lang='en'] {
+    --font-sans: var(--font-latin, 'Manrope'), var(--font-arabic, 'Readex Pro'), sans-serif;
+}
+
+@page {
+    size: A4;
+    margin: 10mm;
+}
+
+@page a5 {
+    size: A5;
+    margin: 7mm;
+}
+
+body {
+    @apply bg-[#0b1220] font-sans text-neutral-900 antialiased;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.sheet {
+    @apply mx-auto my-6 bg-white;
+    width: 210mm;
+    min-height: 297mm;
+    padding: 10mm;
+}
+
+.sheet.a5 {
+    width: 148mm;
+    min-height: 210mm;
+    padding: 7mm;
+    page: a5;
+}
+
+/* Small uppercase field label used across the grid cells. */
+.cap {
+    @apply text-[8.5px] font-semibold tracking-[0.12em] text-neutral-500 uppercase;
+}
+
+.cell {
+    @apply border-neutral-900 px-2.5 py-1.5;
+}
+
+@media print {
+    body {
+        @apply bg-white;
+    }
+
+    .sheet,
+    .sheet.a5 {
+        @apply m-0;
+        width: auto;
+        min-height: auto;
+        padding: 0;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+}
+
+[dir=rtl] .cap, [dir=rtl] [class*="tracking-"] {
+    letter-spacing: 0;
+}
