@@ -1,0 +1,159 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../../app/**/*.php';
+
+/*
+ * Template 1 — "Clinical Clean"
+ * White surfaces, teal primary, blue secondary, rounded-xl cards, soft shadows.
+ * The --color-primary-* scale can be overridden at runtime from Settings → Branding.
+ * See DESIGN.md for the full design system.
+ */
+@theme {
+    --font-sans: var(--font-arabic, 'IBM Plex Sans Arabic'), var(--font-latin, 'Inter'), ui-sans-serif, system-ui, sans-serif;
+
+    --color-primary-50: #f0fdfa;
+    --color-primary-100: #ccfbf1;
+    --color-primary-200: #99f6e4;
+    --color-primary-300: #5eead4;
+    --color-primary-400: #2dd4bf;
+    --color-primary-500: #14b8a6;
+    --color-primary-600: #0d9488;
+    --color-primary-700: #0f766e;
+    --color-primary-800: #115e59;
+    --color-primary-900: #134e4a;
+    --color-primary-950: #042f2e;
+
+    --color-secondary-50: #eff6ff;
+    --color-secondary-100: #dbeafe;
+    --color-secondary-500: #3b82f6;
+    --color-secondary-600: #2563eb;
+    --color-secondary-700: #1d4ed8;
+
+    --color-canvas: #f6f8fb;
+    --color-ink: #0f172a;
+    --color-muted: #64748b;
+    --color-line: #e5eaf0;
+
+    --radius-card: 1rem;
+    --shadow-soft: 0 1px 2px rgb(15 23 42 / 0.04), 0 4px 16px -4px rgb(15 23 42 / 0.08);
+    --shadow-lift: 0 2px 4px rgb(15 23 42 / 0.05), 0 12px 32px -8px rgb(15 23 42 / 0.14);
+}
+
+html[lang='en'] {
+    --font-sans: var(--font-latin, 'Inter'), var(--font-arabic, 'IBM Plex Sans Arabic'), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+    html {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        @apply bg-canvas text-ink antialiased;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+
+    /* Numbers, phones and file numbers always read left-to-right, even inside Arabic text. */
+    .ltr-nums {
+        direction: ltr;
+        unicode-bidi: isolate;
+    }
+}
+
+@layer components {
+    .card {
+        @apply rounded-(--radius-card) border border-line/70 bg-white shadow-(--shadow-soft);
+    }
+
+    .form-label {
+        @apply mb-1.5 block text-sm font-medium text-slate-700;
+    }
+
+    .form-control {
+        @apply block w-full rounded-lg border-slate-300 bg-white px-3 py-2.5 text-sm text-ink shadow-xs placeholder:text-slate-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-500;
+    }
+
+    select.form-control {
+        @apply pe-10;
+    }
+
+    /* @tailwindcss/forms draws the select chevron on the right; mirror it for Arabic. */
+    [dir='rtl'] select.form-control {
+        background-position: left 0.75rem center;
+        padding-right: 0.75rem;
+    }
+
+    .form-control.is-invalid {
+        @apply border-rose-400 focus:border-rose-500 focus:ring-rose-500/20;
+    }
+
+    .form-check {
+        @apply size-4 rounded border-slate-300 text-primary-600 focus:ring-primary-500/30;
+    }
+
+    .form-error {
+        @apply mt-1.5 text-xs font-medium text-rose-600;
+    }
+
+    .form-hint {
+        @apply mt-1.5 text-xs text-muted;
+    }
+
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold whitespace-nowrap transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-60;
+    }
+
+    .btn-sm {
+        @apply px-3 py-1.5 text-xs;
+    }
+
+    .btn-primary {
+        @apply bg-primary-600 text-white shadow-sm hover:bg-primary-700 focus-visible:ring-primary-500;
+    }
+
+    .btn-secondary {
+        @apply border border-slate-300 bg-white text-slate-700 shadow-xs hover:bg-slate-50 focus-visible:ring-slate-400;
+    }
+
+    .btn-ghost {
+        @apply text-slate-600 hover:bg-slate-100 hover:text-ink focus-visible:ring-slate-300;
+    }
+
+    .btn-danger {
+        @apply bg-rose-600 text-white shadow-sm hover:bg-rose-700 focus-visible:ring-rose-500;
+    }
+
+    .table-clean {
+        @apply min-w-full divide-y divide-line text-sm;
+    }
+
+    .table-clean thead th {
+        @apply bg-slate-50/80 px-4 py-3 text-start text-xs font-semibold tracking-wide text-muted;
+    }
+
+    .table-clean tbody td {
+        @apply px-4 py-3 align-middle text-slate-700;
+    }
+
+    .table-clean tbody tr {
+        @apply transition hover:bg-primary-50/40;
+    }
+
+    .nav-link {
+        @apply flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-primary-50 hover:text-primary-700;
+    }
+
+    .nav-link.active {
+        @apply bg-primary-50 text-primary-700 shadow-[inset_-3px_0_0_var(--color-primary-600)];
+    }
+
+    [dir='ltr'] .nav-link.active {
+        @apply shadow-[inset_3px_0_0_var(--color-primary-600)];
+    }
+}
