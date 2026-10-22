@@ -1,0 +1,192 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../../app/**/*.php';
+
+/*
+ * Template 3 — "Warm & Friendly"
+ * Cream canvas, coral primary, orange secondary, warm brown ink, very rounded
+ * shapes, large friendly type, emoji accents and a top navigation bar.
+ * The --color-primary-* scale can be overridden at runtime from Settings → Branding.
+ * See DESIGN.md for the full design system.
+ */
+@theme {
+    --font-sans: var(--font-arabic, 'Baloo Bhaijaan 2'), var(--font-latin, 'Nunito'), ui-rounded, ui-sans-serif, system-ui, sans-serif;
+
+    --color-primary-50: #fff5f3;
+    --color-primary-100: #ffe6e1;
+    --color-primary-200: #ffccc3;
+    --color-primary-300: #ffa799;
+    --color-primary-400: #fb7d6b;
+    --color-primary-500: #f25c49;
+    --color-primary-600: #df4330;
+    --color-primary-700: #bb3424;
+    --color-primary-800: #9a2e22;
+    --color-primary-900: #802b22;
+    --color-primary-950: #45110b;
+
+    --color-secondary-50: #fff7ed;
+    --color-secondary-100: #ffedd5;
+    --color-secondary-400: #fb923c;
+    --color-secondary-500: #f97316;
+    --color-secondary-600: #ea580c;
+    --color-secondary-700: #c2410c;
+
+    --color-canvas: #fdf7ef;
+    --color-cream: #fbeedd;
+    --color-ink: #3b2a24;
+    --color-muted: #8a7468;
+    --color-line: #f0e2d2;
+
+    --radius-card: 1.75rem;
+    --shadow-soft: 0 2px 0 rgb(186 140 100 / 0.12), 0 10px 30px -12px rgb(186 120 80 / 0.25);
+    --shadow-lift: 0 4px 0 rgb(186 140 100 / 0.15), 0 24px 48px -16px rgb(150 90 60 / 0.35);
+}
+
+html[lang='en'] {
+    --font-sans: var(--font-latin, 'Nunito'), var(--font-arabic, 'Baloo Bhaijaan 2'), ui-rounded, ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Arabic script must never be letter-spaced: tracking breaks letter joining. Unlayered, so it beats utilities. */
+[dir='rtl'] [class*='tracking-'] {
+    letter-spacing: 0;
+}
+
+@layer base {
+    html {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        @apply bg-canvas text-[15px] text-ink antialiased;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+
+    /* Numbers, phones and file numbers always read left-to-right, even inside Arabic text. */
+    .ltr-nums {
+        direction: ltr;
+        unicode-bidi: isolate;
+    }
+}
+
+@layer components {
+    .card {
+        @apply rounded-(--radius-card) border-2 border-line bg-white shadow-(--shadow-soft);
+    }
+
+    .emoji {
+        font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+        line-height: 1;
+    }
+
+    .emoji-tile {
+        @apply inline-grid shrink-0 place-items-center rounded-2xl bg-cream;
+    }
+
+    .form-label {
+        @apply mb-1.5 block text-sm font-semibold text-stone-700;
+    }
+
+    .form-control {
+        @apply block w-full rounded-2xl border-2 border-line bg-white px-4 py-2.5 text-[15px] text-ink placeholder:text-stone-400 focus:border-primary-400 focus:ring-4 focus:ring-primary-100 disabled:cursor-not-allowed disabled:bg-cream/50 disabled:text-stone-500;
+    }
+
+    select.form-control {
+        @apply pe-10;
+    }
+
+    /* @tailwindcss/forms draws the select chevron on the right; mirror it for Arabic. */
+    [dir='rtl'] select.form-control {
+        background-position: left 0.85rem center;
+        padding-right: 1rem;
+    }
+
+    .form-control.is-invalid {
+        @apply border-rose-300 focus:border-rose-400 focus:ring-rose-100;
+    }
+
+    .form-check {
+        @apply size-5 rounded-md border-2 border-stone-300 text-primary-500 focus:ring-primary-200;
+    }
+
+    .form-error {
+        @apply mt-1.5 text-sm font-semibold text-rose-600;
+    }
+
+    .form-hint {
+        @apply mt-1.5 text-xs text-muted;
+    }
+
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-[15px] font-bold whitespace-nowrap transition active:translate-y-px focus-visible:ring-4 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-60;
+    }
+
+    .btn-sm {
+        @apply px-3.5 py-1.5 text-sm;
+    }
+
+    .btn-primary {
+        @apply bg-primary-500 text-white shadow-[0_3px_0_var(--color-primary-700)] hover:bg-primary-600 focus-visible:ring-primary-200;
+    }
+
+    .btn-secondary {
+        @apply border-2 border-line bg-white text-ink shadow-[0_2px_0_var(--color-line)] hover:border-primary-200 hover:bg-primary-50 focus-visible:ring-primary-100;
+    }
+
+    .btn-ghost {
+        @apply text-stone-600 hover:bg-cream hover:text-ink focus-visible:ring-primary-100;
+    }
+
+    .btn-danger {
+        @apply bg-rose-500 text-white shadow-[0_3px_0_var(--color-rose-700)] hover:bg-rose-600 focus-visible:ring-rose-200;
+    }
+
+    .table-clean {
+        @apply min-w-full text-[15px];
+    }
+
+    .table-clean thead th {
+        @apply bg-cream/60 px-4 py-3 text-start text-sm font-bold text-stone-600 first:rounded-s-2xl last:rounded-e-2xl;
+    }
+
+    .table-clean tbody td {
+        @apply border-b-2 border-dashed border-line px-4 py-3.5 align-middle text-stone-700;
+    }
+
+    .table-clean tbody tr:last-child td {
+        @apply border-b-0;
+    }
+
+    .table-clean tbody tr {
+        @apply transition hover:bg-primary-50/50;
+    }
+
+    /* Top navigation pills */
+    .nav-pill {
+        @apply inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-[15px] font-bold whitespace-nowrap text-stone-600 transition hover:bg-white hover:text-ink;
+    }
+
+    .nav-pill.active {
+        @apply bg-white text-primary-600 shadow-(--shadow-soft);
+    }
+
+    /* Drawer / dropdown links */
+    .nav-link {
+        @apply flex items-center gap-3 rounded-2xl px-3 py-2.5 text-[15px] font-semibold text-stone-700 transition hover:bg-primary-50 hover:text-primary-700;
+    }
+
+    .nav-link.active {
+        @apply bg-primary-50 text-primary-700;
+    }
+}
+
+@keyframes wave {
+    0%, 60%, 100% { transform: rotate(0deg); }
+    10%, 30% { transform: rotate(14deg); }
+    20%, 40% { transform: rotate(-8deg); }
+}
