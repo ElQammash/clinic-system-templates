@@ -1,0 +1,22 @@
+# Each template also has its own Laravel .gitignore (vendor, node_modules, .env, public/build…).
+
+# Runtime files that must never be committed: generated exports, PDF font caches,
+# patient attachments, clinic logos and database backups.
+template_*/storage/app/exports/
+template_*/storage/app/mpdf/
+template_*/storage/app/private/*
+!template_*/storage/app/private/.gitignore
+template_*/storage/app/public/*
+!template_*/storage/app/public/.gitignore
+template_*/storage/logs/*.log
+template_*/storage/framework/views/*.php
+
+# Local databases
+*.sqlite
+*.sqlite-journal
+
+# OS / editor
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/
