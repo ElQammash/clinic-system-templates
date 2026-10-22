@@ -1,0 +1,181 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../../app/**/*.php';
+
+/*
+ * Template 5 — "Tablet-First Reception"
+ * Built for a reception desk tablet: big touch targets (min 48px), a bottom tab bar,
+ * split-screen master/detail pages and high-contrast indigo/purple on near-white.
+ * The --color-primary-* scale can be overridden at runtime from Settings → Branding.
+ * See DESIGN.md for the full design system.
+ */
+@theme {
+    --font-sans: var(--font-arabic, 'Cairo'), var(--font-latin, 'Lexend'), ui-sans-serif, system-ui, sans-serif;
+
+    --color-primary-50: #eef2ff;
+    --color-primary-100: #e0e7ff;
+    --color-primary-200: #c7d2fe;
+    --color-primary-300: #a5b4fc;
+    --color-primary-400: #818cf8;
+    --color-primary-500: #6366f1;
+    --color-primary-600: #4f46e5;
+    --color-primary-700: #4338ca;
+    --color-primary-800: #3730a3;
+    --color-primary-900: #312e81;
+    --color-primary-950: #1e1b4b;
+
+    --color-secondary-50: #faf5ff;
+    --color-secondary-100: #f3e8ff;
+    --color-secondary-500: #a855f7;
+    --color-secondary-600: #9333ea;
+    --color-secondary-700: #7e22ce;
+
+    --color-canvas: #f4f5fb;
+    --color-ink: #0b0d1f;
+    --color-muted: #4b5168;
+    --color-line: #d9dcea;
+
+    --radius-card: 1.25rem;
+    --shadow-soft: 0 1px 0 rgb(11 13 31 / 0.04), 0 6px 20px -8px rgb(49 46 129 / 0.18);
+    --shadow-lift: 0 18px 50px -12px rgb(49 46 129 / 0.35);
+
+    --spacing-tap: 3rem;
+}
+
+html[lang='en'] {
+    --font-sans: var(--font-latin, 'Lexend'), var(--font-arabic, 'Cairo'), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Arabic script must never be letter-spaced: tracking breaks letter joining. Unlayered, so it beats utilities. */
+[dir='rtl'] [class*='tracking-'] {
+    letter-spacing: 0;
+}
+
+@layer base {
+    html {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    body {
+        @apply bg-canvas text-base text-ink antialiased;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+
+    /* Numbers, phones and file numbers always read left-to-right, even inside Arabic text. */
+    .ltr-nums {
+        direction: ltr;
+        unicode-bidi: isolate;
+    }
+
+    :focus-visible {
+        @apply outline-3 outline-offset-2 outline-primary-500;
+    }
+}
+
+@layer components {
+    .card {
+        @apply rounded-(--radius-card) border border-line bg-white shadow-(--shadow-soft);
+    }
+
+    .form-label {
+        @apply mb-2 block text-[15px] font-bold text-ink;
+    }
+
+    .form-control {
+        @apply block min-h-12 w-full rounded-2xl border-2 border-slate-300 bg-white px-4 py-3 text-base text-ink placeholder:text-slate-500 focus:border-primary-600 focus:ring-4 focus:ring-primary-200 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-600;
+    }
+
+    select.form-control {
+        @apply pe-11;
+    }
+
+    /* @tailwindcss/forms draws the select chevron on the right; mirror it for Arabic. */
+    [dir='rtl'] select.form-control {
+        background-position: left 0.9rem center;
+        padding-right: 1rem;
+    }
+
+    .form-control.is-invalid {
+        @apply border-rose-500 focus:border-rose-600 focus:ring-rose-200;
+    }
+
+    .form-check {
+        @apply size-6 rounded-lg border-2 border-slate-400 text-primary-600 focus:ring-primary-300;
+    }
+
+    .form-error {
+        @apply mt-2 text-sm font-bold text-rose-700;
+    }
+
+    .form-hint {
+        @apply mt-1.5 text-sm text-muted;
+    }
+
+    .btn {
+        @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl px-5 py-3 text-base font-bold whitespace-nowrap transition select-none active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50;
+    }
+
+    .btn-sm {
+        @apply min-h-10 rounded-xl px-4 py-2 text-[15px];
+    }
+
+    .btn-lg {
+        @apply min-h-16 rounded-3xl px-7 text-lg;
+    }
+
+    .btn-primary {
+        @apply bg-primary-600 text-white hover:bg-primary-700;
+    }
+
+    .btn-secondary {
+        @apply border-2 border-slate-300 bg-white text-ink hover:border-primary-400 hover:bg-primary-50;
+    }
+
+    .btn-ghost {
+        @apply text-slate-700 hover:bg-primary-50 hover:text-primary-800;
+    }
+
+    .btn-danger {
+        @apply bg-rose-600 text-white hover:bg-rose-700;
+    }
+
+    .table-clean {
+        @apply min-w-full divide-y divide-line text-[15px];
+    }
+
+    .table-clean thead th {
+        @apply bg-primary-50 px-4 py-3.5 text-start text-sm font-bold text-primary-900;
+    }
+
+    .table-clean tbody td {
+        @apply px-4 py-4 align-middle text-slate-800;
+    }
+
+    .table-clean tbody tr {
+        @apply transition hover:bg-primary-50/50;
+    }
+
+    /* Bottom tab bar */
+    .tab-item {
+        @apply flex min-h-16 flex-1 flex-col items-center justify-center gap-1 rounded-2xl px-1 text-[13px] font-bold text-slate-600 transition;
+    }
+
+    .tab-item.active {
+        @apply bg-primary-600 text-white;
+    }
+
+    .nav-link {
+        @apply flex min-h-14 items-center gap-3 rounded-2xl px-4 text-base font-bold text-ink transition hover:bg-primary-50;
+    }
+
+    .nav-link.active {
+        @apply bg-primary-600 text-white;
+    }
+}

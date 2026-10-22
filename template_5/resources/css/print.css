@@ -1,0 +1,83 @@
+@import 'tailwindcss' source(none);
+
+@source '../views/print/**/*.blade.php';
+@source '../views/components/print-layout.blade.php';
+
+/*
+ * Print stylesheet for template 5 ("Tablet-First Reception"): solid indigo header band,
+ * large high-contrast type (easy for elderly patients to read), bold boxed sections.
+ * The primary palette is overridden by the clinic color (Settings → Branding).
+ */
+@theme {
+    --font-sans: var(--font-arabic, 'Cairo'), var(--font-latin, 'Lexend'), sans-serif;
+
+    --color-primary-50: #eef2ff;
+    --color-primary-100: #e0e7ff;
+    --color-primary-200: #c7d2fe;
+    --color-primary-500: #6366f1;
+    --color-primary-600: #4f46e5;
+    --color-primary-700: #4338ca;
+    --color-primary-900: #312e81;
+    --color-secondary-500: #a855f7;
+    --color-secondary-600: #9333ea;
+}
+
+html[lang='en'] {
+    --font-sans: var(--font-latin, 'Lexend'), var(--font-arabic, 'Cairo'), sans-serif;
+}
+
+@page {
+    size: A4;
+    margin: 10mm;
+}
+
+@page a5 {
+    size: A5;
+    margin: 7mm;
+}
+
+body {
+    @apply bg-slate-200 font-sans text-slate-950 antialiased;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.sheet {
+    @apply mx-auto my-6 bg-white;
+    width: 210mm;
+    min-height: 297mm;
+    padding: 10mm;
+}
+
+.sheet.a5 {
+    width: 148mm;
+    min-height: 210mm;
+    padding: 7mm;
+    page: a5;
+}
+
+.box {
+    @apply rounded-xl border-2 border-slate-900 px-3 py-2;
+}
+
+.label {
+    @apply text-[10px] font-bold text-slate-600;
+}
+
+@media print {
+    body {
+        @apply bg-white;
+    }
+
+    .sheet,
+    .sheet.a5 {
+        @apply m-0;
+        width: auto;
+        min-height: auto;
+        padding: 0;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+}
